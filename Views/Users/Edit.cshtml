@@ -1,0 +1,56 @@
+@{
+    ViewData["Title"] = "Editing User";
+}
+@model Exercise4.ViewModels.UserViewModel;
+
+<section class="max-w-7xl mx-auto px-8 py-section-gap">
+    <!-- Header Section -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div class="space-y-2">
+            <h1 class="font-h1 text-h1 text-primary">User Updating</h1>
+            <p class="text-body-lg text-secondary max-w-2xl">Update specific information of any user.</p>
+        </div>
+    </div>
+    
+    <!-- Updating Section -->
+    <div class="bg-white rounded-xl shadow-sm border border-outline-variant p-8 mb-12">
+        <form asp-action="Update" asp-controller="Users" method="post" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
+            <!-- Required Data -->
+            <input type="hidden" asp-for="NewUser.Id">
+            <input type="hidden" asp-for="NewUser.Email">
+            
+            <div class="space-y-2"> <!-- NAME -->
+                <span class="text-danger d-block" asp-validation-for="NewUser.Name"></span>
+                <label class="block text-xs font-bold text-secondary uppercase tracking-wider" asp-for="NewUser.Name">First Name</label>
+                <input class="w-full px-4 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-[#6BAA75] focus:ring-1 focus:ring-[#6BAA75] transition-all outline-none" asp-for="NewUser.Name" placeholder="e.g. Mateo" type="text"/>
+            </div>
+            <div class="space-y-2"> <!-- LAST NAME -->
+                <span class="text-danger d-block" asp-validation-for="NewUser.LastName"></span>
+                <label class="block text-xs font-bold text-secondary uppercase tracking-wider" asp-for="NewUser.LastName">Last Name</label>
+                <input class="w-full px-4 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-[#6BAA75] focus:ring-1 focus:ring-[#6BAA75] transition-all outline-none" asp-for="NewUser.LastName" placeholder="e.g. Silva" type="text"/>
+            </div>
+            <div class="space-y-2"> <!-- PHONE -->
+                <span class="text-danger d-block" asp-validation-for="NewUser.Phone"></span>
+                <label class="block text-xs font-bold text-secondary uppercase tracking-wider" asp-for="NewUser.Phone">Phone Number</label>
+                <input class="w-full px-4 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-[#6BAA75] focus:ring-1 focus:ring-[#6BAA75] transition-all outline-none" asp-for="NewUser.Phone" placeholder="e. g. 3123328743" type="text"/>
+            </div>
+            <div class="space-y-2"> <!-- ADDRESS -->
+                <span class="text-danger d-block" asp-validation-for="NewUser.Address"></span>
+                <label class="block text-xs font-bold text-secondary uppercase tracking-wider" asp-for="NewUser.Address">Address</label>
+                <input class="w-full px-4 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-[#6BAA75] focus:ring-1 focus:ring-[#6BAA75] transition-all outline-none" asp-for="NewUser.Address" placeholder="e. g. Carrera 98 #23" type="text"/>
+            </div>
+            <div class="space-y-2"> <!-- EMERGENCY PHONE -->
+                <span class="text-danger d-block" asp-validation-for="NewUser.EmergencyPhone"></span>
+                <label class="block text-xs font-bold text-secondary uppercase tracking-wider" asp-for="NewUser.EmergencyPhone">Emergency Phone</label>
+                <input class="w-full px-4 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-[#6BAA75] focus:ring-1 focus:ring-[#6BAA75] transition-all outline-none" asp-for="NewUser.EmergencyPhone" placeholder="e. g. 313245232" type="text"/>
+            </div>
+
+            <div class="lg:col-span-4 flex justify-end mt-2">
+                <button type="submit" class="bg-[#6BAA75] text-white px-8 py-3 rounded-lg font-semibold flex items-center gap-2 hover:opacity-90 active:scale-[0.99] transition-all shadow-md">
+                    <span class="material-symbols-outlined">update</span>
+                    Update User
+                </button>
+            </div>
+        </form>
+    </div>
+</section>

@@ -1,0 +1,159 @@
+@{
+    ViewData["Title"] = "Books Management";
+}
+@using Exercise4.Enums
+@model Exercise4.ViewModels.BookViewModel
+
+
+<section class="max-w-7xl mx-auto px-8 py-section-gap">
+    <!-- Header Section -->
+    <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+        <div>
+            <h1 class="font-h1 text-h1 text-primary mb-2">Books Management</h1>
+            <p class="font-body-lg text-body-lg text-secondary">Control and curate your library's digital and physical catalog.</p>
+        </div>
+    </div>
+    
+    <!-- Showing Errors -->
+    <div asp-validation-summary="All" class="text-red-700 px-4 py-3 rounded"></div>
+    @if (TempData["ErrorMsg"] != null)
+    {
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+            @TempData["ErrorMsg"]
+        </div>
+    }
+    
+    <!-- New Book Registration Section -->
+    <div class="bg-white rounded-xl shadow-sm border border-outline-variant p-8 mb-12">
+        <div class="mb-6">
+            <h2 class="text-xl font-bold text-primary mb-1">New Book Registration</h2>
+            <p class="text-sm text-secondary">Register a new book in the digital library.</p>
+        </div>
+        <form asp-action="Create" asp-controller="Books" method="post" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
+            <div class="space-y-2"> <!-- ISBN -->
+                <span class="text-danger d-block" asp-validation-for="NewBook.ISBN"></span>
+                <label class="block text-xs font-bold text-secondary uppercase tracking-wider" asp-for="NewBook.ISBN">ISBN</label>
+                <input class="w-full px-4 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-[#6BAA75] focus:ring-1 focus:ring-[#6BAA75] transition-all outline-none" asp-for="NewBook.ISBN" placeholder="e.g. AEWRETWS12AGE" type="text"/>
+            </div>
+            <div class="space-y-2"> <!-- TITLE -->
+                <span class="text-danger d-block" asp-validation-for="NewBook.Title"></span>
+                <label class="block text-xs font-bold text-secondary uppercase tracking-wider" asp-for="NewBook.Title">Title</label>
+                <input class="w-full px-4 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-[#6BAA75] focus:ring-1 focus:ring-[#6BAA75] transition-all outline-none" asp-for="NewBook.Title" placeholder="e.g. Atomic Habits" type="text"/>
+            </div>
+            <div class="space-y-2"> <!-- Description -->
+                <span class="text-danger d-block" asp-validation-for="NewBook.Description"></span>
+                <label class="block text-xs font-bold text-secondary uppercase tracking-wider" asp-for="NewBook.Description">Description</label>
+                <input class="w-full px-4 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-[#6BAA75] focus:ring-1 focus:ring-[#6BAA75] transition-all outline-none" asp-for="NewBook.Description" placeholder="e. g. This library talks about how the habits can be atomic in our lifes." type="text"/>
+            </div>
+            <div class="space-y-2"> <!-- AUTHOR -->
+                <span class="text-danger d-block" asp-validation-for="NewBook.Author"></span>
+                <label class="block text-xs font-bold text-secondary uppercase tracking-wider" asp-for="NewBook.Author">Author</label>
+                <input class="w-full px-4 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-[#6BAA75] focus:ring-1 focus:ring-[#6BAA75] transition-all outline-none" asp-for="NewBook.Author" placeholder="e. g. James Clear" type="text"/>
+            </div>
+            <div class="space-y-2"> <!-- EDITORIAL -->
+                <span class="text-danger d-block" asp-validation-for="NewBook.Editorial"></span>
+                <label class="block text-xs font-bold text-secondary uppercase tracking-wider" asp-for="NewBook.Editorial">Editorial</label>
+                <input class="w-full px-4 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-[#6BAA75] focus:ring-1 focus:ring-[#6BAA75] transition-all outline-none" asp-for="NewBook.Editorial" placeholder="e. g. New York Library" type="text"/>
+            </div>
+            <div class="space-y-2"> <!-- GENDER -->
+                <span class="text-danger d-block" asp-validation-for="NewBook.Gender"></span>
+                <label class="block text-xs font-bold text-secondary uppercase tracking-wider" asp-for="NewBook.Gender">Gender</label>
+                <select class="w-full px-4 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-[#6BAA75] focus:ring-1 focus:ring-[#6BAA75] transition-all outline-none appearance-none" asp-for="NewBook.Gender" asp-items="Html.GetEnumSelectList<BookGender>()">
+                </select>
+            </div>
+            <div class="space-y-2"> <!-- Year Published -->
+                <span class="text-danger d-block" asp-validation-for="NewBook.YearPublished"></span>
+                <label class="block text-xs font-bold text-secondary uppercase tracking-wider" asp-for="NewBook.YearPublished">Year Published</label>
+                <input class="w-full px-4 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-[#6BAA75] focus:ring-1 focus:ring-[#6BAA75] transition-all outline-none" asp-for="NewBook.YearPublished" placeholder="e. g: 2008" type="text"/>
+            </div>
+            <div class="space-y-2"> <!-- Number of Pages -->
+                <span class="text-danger d-block" asp-validation-for="NewBook.NumberOfPages"></span>
+                <label class="block text-xs font-bold text-secondary uppercase tracking-wider" asp-for="NewBook.NumberOfPages">Number Of Pages</label>
+                <input class="w-full px-4 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-[#6BAA75] focus:ring-1 focus:ring-[#6BAA75] transition-all outline-none" asp-for="NewBook.NumberOfPages" placeholder="e. g: 300" type="text"/>
+            </div>
+            
+            <div class="lg:col-span-4 flex justify-end mt-2">
+                <button type="submit" class="bg-[#6BAA75] text-white px-8 py-3 rounded-lg font-semibold flex items-center gap-2 hover:opacity-90 active:scale-[0.99] transition-all shadow-md">
+                    <span class="material-symbols-outlined">book</span>
+                    Register Book
+                </button>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Main Table Container -->
+    <div class="bg-white rounded-xl shadow-sm border border-outline-variant overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                <tr class="bg-surface-container-low border-b border-outline-variant">
+                    <th class="px-6 py-4 font-label-caps text-label-caps text-secondary">Title</th>
+                    <th class="px-6 py-4 font-label-caps text-label-caps text-secondary">Author</th>
+                    <th class="px-6 py-4 font-label-caps text-label-caps text-secondary">Editorial</th>
+                    <th class="px-6 py-4 font-label-caps text-label-caps text-secondary">Gender</th>
+                    <th class="px-6 py-4 font-label-caps text-label-caps text-secondary">State</th>
+                    <th class="px-6 py-4 font-label-caps text-label-caps text-secondary">Details</th>
+                    <th class="px-6 py-4 font-label-caps text-label-caps text-secondary text-right">Actions</th>
+                </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant">
+
+                <!-- Book Rows -->
+                @foreach (var book in Model.Books)
+                {
+                    <tr class="hover:bg-surface-container-low/50 transition-colors group">
+                        <td class="px-6 py-5">
+                            <div class="flex items-center gap-4">
+                                <div class="h-10 w-10 rounded-full bg-secondary-fixed flex items-center justify-center text-secondary font-bold">@book.Id</div>
+                                <div>
+                                    <div class="font-semibold text-primary">@book.Title</div>
+                                    <div class="text-sm text-outline">@book.ISBN</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-5 text-secondary">@book.Author</td>
+                        <td class="px-6 py-5 text-secondary">@book.Editorial</td>
+                        <td class="px-6 py-5 text-secondary">@book.Gender</td>
+                        <td class="px-6 py-5 text-secondary">@book.State</td>
+                        <td class="px-6 py-5 text-secondary">
+                            <a asp-controller="Books" asp-action="Details" asp-route-id="@book.Id" class="p-2 text-outline hover:text-[#3B2F2F] hover:bg-surface-container-high rounded-md transition-all">
+                                View
+                            </a>
+                        </td>
+                        <td class="px-6 py-5 text-right">
+                            <div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <a asp-controller="Books" asp-action="Edit" asp-route-id="@book.Id" class="p-2 text-outline hover:text-[#3B2F2F] hover:bg-surface-container-high rounded-md transition-all">
+                                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                                </a>
+                                <form asp-action="Delete" asp-controller="Books" asp-route-id="@book.Id" method="post">
+                                    <button type="submit" class="p-2 text-outline hover:text-error hover:bg-error-container/30 rounded-md transition-all">
+                                        <span class="material-symbols-outlined text-[20px]">delete</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Secondary Info Section -->
+    <div class="mt-section-gap grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="p-6 border-l-4 border-[#6BAA75] bg-white shadow-sm rounded-r-xl">
+            <h3 class="font-h3 text-h3 text-primary mb-2">Policy Compliance</h3>
+            <p class="text-body-md text-secondary">All user data is managed according to the Library Digital Safety Protocol. Remember to verify ID for all Premium memberships.</p>
+        </div>
+        <div class="p-6 border-l-4 border-secondary bg-white shadow-sm rounded-r-xl">
+            <h3 class="font-h3 text-h3 text-primary mb-2">Recent Changes</h3>
+            <p class="text-body-md text-secondary">System-wide role update completed successfully on Oct 24th. 14 new registrations pending verification.</p>
+        </div>
+        <div class="p-6 border-l-4 border-primary bg-white shadow-sm rounded-r-xl">
+            <h3 class="font-h3 text-h3 text-primary mb-2">Quick Shortcuts</h3>
+            <div class="flex flex-wrap gap-2 mt-4">
+                <span class="px-2 py-1 bg-surface-container text-xs font-bold rounded">CMD + N : NEW BOOK</span>
+                <span class="px-2 py-1 bg-surface-container text-xs font-bold rounded">CMD + F : SEARCH</span>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "NexoLibro | Home";
+}
+
+<!-- Hero Section -->
+<section class="relative min-h-[870px] flex items-center overflow-hidden bg-surface-container-low w-full">
+    <div class="max-w-[1280px] mx-auto px-8 w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center py-section-gap">
+        <div class="z-10 space-y-8">
+            <div class="inline-flex items-center gap-2 px-3 py-1 bg-[#6BAA75]/10 text-[#6BAA75] rounded-full">
+                <span class="font-label-caps text-label-caps">READ WITHOUT ANY LIMITS</span>
+            </div>
+            <h1 class="font-h1 text-h1 text-primary leading-tight">We connect readers with histories, without friction</h1>
+            <p class="font-body-lg text-body-lg text-secondary max-w-lg">NexoLibro is your digital sanctuary. A modern library designed for clarity, the discovery and the tactile pleasure of the reading in the digital era.</p>
+            <div class="flex flex-wrap gap-4 pt-4">
+                <a asp-controller="Loans" asp-action="Index" class="bg-[#6BAA75] hover:bg-[#5a9163] text-white px-8 py-4 rounded-lg font-semibold transition-all transform hover:scale-105 active:scale-95 shadow-lg shadow-[#6BAA75]/20">
+                    Ask Books Loans
+                </a>
+                <a asp-controller="Books" asp-action="Index" class="bg-[#3B2F2F] hover:bg-[#2d2424] text-white px-8 py-4 rounded-lg font-semibold transition-all transform hover:scale-105 active:scale-95">
+                    Explore Catalog
+                </a>
+            </div>
+        </div>
+        <div class="relative hidden lg:block">
+            <div class="aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl relative z-20 transform rotate-2 hover:rotate-0 transition-transform duration-700">
+                <img alt="Interior of a modern, warm library" class="w-full h-full object-cover" data-alt="Interior of a modern library with warm wooden shelves, soft amber lighting, and cozy reading nooks at sunset" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB46YpaZtx3GkFp_xRoDmyLogmdEh2iku0svymTVF9vkx6v657f8hZ2ykAsD_fXGxgUv3d3P8n3Fo3yD3ZF1GOmZC5BfeIaQvnpOd3EvMJHCe5duU33bHwn4YAsgV7nS0dAzdPWSQlTdssVwrVt3xRRSoTtVq2hZ8r0tCcPpgyQEKAn_mA8r0EAkHOuTsfT5PSaFfqHqLgITiyPkd91HFONBiSDXs60-iU8WxMpw3tAIjHXl-MrSxyk-B2JhMKEGslSuj8fxdVUYfsp"/>
+            </div>
+            <!-- Decorative accents -->
+            <div class="absolute -top-8 -right-8 w-64 h-64 bg-[#f8dac2] rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
+            <div class="absolute -bottom-12 -left-12 w-80 h-80 bg-[#6BAA75] rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Bento Grid Stats/Features -->
+<section class="py-section-gap max-w-[1280px] mx-auto px-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter h-auto md:h-[400px]">
+        <div class="md:col-span-2 bg-[#3B2F2F] p-10 rounded-xl flex flex-col justify-between text-white shadow-xl">
+            <span class="material-symbols-outlined text-4xl text-[#6BAA75]">auto_stories</span>
+            <div>
+                <h3 class="font-h3 text-h3 mb-2">Instant Access</h3>
+                <p class="text-stone-300">More than 50.000 available titles for digital inmediatly loan.</p>
+            </div>
+        </div>
+        <div class="bg-white p-10 rounded-xl border border-stone-100 flex flex-col items-center justify-center text-center book-card-shadow transition-all">
+            <h2 class="text-5xl font-bold text-[#6BAA75] mb-2">24/7</h2>
+            <p class="font-label-caps text-label-caps text-secondary uppercase">Availability</p>
+        </div>
+        <div class="bg-[#f8dac2]/30 p-10 rounded-xl flex flex-col justify-end border border-[#f8dac2]/50">
+            <h3 class="font-h3 text-h3 text-primary mb-2">Community</h3>
+            <p class="text-secondary text-sm">Get into readers clubs and in-live literary debates</p>
+        </div>
+        <div class="bg-[#6BAA75] p-10 rounded-xl md:col-span-2 flex items-center gap-8 text-white shadow-xl">
+            <div class="flex-1">
+                <h3 class="font-h3 text-h3 mb-2">Reading without Distractions</h3>
+                <p class="text-white/80">Optimized interface for the focus and the tranquility of the reader</p>
+            </div>
+            <div class="hidden sm:block w-32 h-32 bg-white/20 rounded-full border-4 border-white/30 flex items-center justify-center">
+                <span class="material-symbols-outlined text-5xl">menu_book</span>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- CTA Section -->
+<section class="py-24 bg-[#3B2F2F] text-white">
+    <div class="max-w-[1280px] mx-auto px-8 text-center space-y-8">
+        <h2 class="font-h2 text-h2 max-w-2xl mx-auto">Are you ready for start your next literary adventure?</h2>
+        <p class="font-body-lg text-stone-300 max-w-xl mx-auto">Get into NexoLibro today and get ilimited access to our digital colection during the next first 30 days</p>
+        <div class="pt-4">
+            <a asp-controller="Loans" asp-action="Index" class="bg-[#6BAA75] hover:bg-[#5a9163] text-white px-10 py-5 rounded-lg font-bold text-lg shadow-2xl shadow-[#6BAA75]/30 transition-all transform hover:scale-105 active:scale-95">
+                Ask Book Loans
+            </a>
+        </div>
+    </div>
+</section>

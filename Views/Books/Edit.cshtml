@@ -1,0 +1,56 @@
+@{
+    ViewData["Title"] = "NexusBook | Editing Book";
+}
+@model Exercise4.ViewModels.BookViewModel;
+@using Exercise4.Enums;
+
+<section class="max-w-7xl mx-auto px-8 py-section-gap">
+    <!-- Header Section -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div class="space-y-2">
+            <h1 class="font-h1 text-h1 text-primary">User Updating</h1>
+            <p class="text-body-lg text-secondary max-w-2xl">Update specific information of any user.</p>
+        </div>
+    </div>
+    
+    <!-- Updating Section -->
+    <div class="bg-white rounded-xl shadow-sm border border-outline-variant p-8 mb-12">
+        <form asp-action="Update" asp-controller="Books" method="post" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
+            <!-- Required Fields -->
+            <input type="hidden" asp-for="NewBook.Id">
+            <input type="hidden" asp-for="NewBook.ISBN">
+            <input type="hidden" asp-for="NewBook.Title">
+            <input type="hidden" asp-for="NewBook.Editorial">
+            <input type="hidden" asp-for="NewBook.YearPublished">
+            
+            <div class="space-y-2"> <!-- Description -->
+                <span class="text-danger d-block" asp-validation-for="NewBook.Description"></span>
+                <label class="block text-xs font-bold text-secondary uppercase tracking-wider" asp-for="NewBook.Description">Description</label>
+                <input class="w-full px-4 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-[#6BAA75] focus:ring-1 focus:ring-[#6BAA75] transition-all outline-none" asp-for="NewBook.Description" placeholder="e. g. This library talks about how the habits can be atomic in our lifes." type="text"/>
+            </div>
+            <div class="space-y-2"> <!-- AUTHOR -->
+                <span class="text-danger d-block" asp-validation-for="NewBook.Author"></span>
+                <label class="block text-xs font-bold text-secondary uppercase tracking-wider" asp-for="NewBook.Author">Author</label>
+                <input class="w-full px-4 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-[#6BAA75] focus:ring-1 focus:ring-[#6BAA75] transition-all outline-none" asp-for="NewBook.Author" placeholder="e. g. James Clear" type="text"/>
+            </div>
+            <div class="space-y-2"> <!-- GENDER -->
+                <span class="text-danger d-block" asp-validation-for="NewBook.Gender"></span>
+                <label class="block text-xs font-bold text-secondary uppercase tracking-wider" asp-for="NewBook.Gender">Gender</label>
+                <select class="w-full px-4 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-[#6BAA75] focus:ring-1 focus:ring-[#6BAA75] transition-all outline-none appearance-none" asp-for="NewBook.Gender" asp-items="Html.GetEnumSelectList<BookGender>()">
+                </select>
+            </div>
+            <div class="space-y-2"> <!-- Number of Pages -->
+                <span class="text-danger d-block" asp-validation-for="NewBook.NumberOfPages"></span>
+                <label class="block text-xs font-bold text-secondary uppercase tracking-wider" asp-for="NewBook.NumberOfPages">Number Of Pages</label>
+                <input class="w-full px-4 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-[#6BAA75] focus:ring-1 focus:ring-[#6BAA75] transition-all outline-none" asp-for="NewBook.NumberOfPages" placeholder="e. g: 300" type="text"/>
+            </div>
+
+            <div class="lg:col-span-4 flex justify-end mt-2">
+                <button type="submit" class="bg-[#6BAA75] text-white px-8 py-3 rounded-lg font-semibold flex items-center gap-2 hover:opacity-90 active:scale-[0.99] transition-all shadow-md">
+                    <span class="material-symbols-outlined">update</span>
+                    Update Book
+                </button>
+            </div>
+        </form>
+    </div>
+</section>

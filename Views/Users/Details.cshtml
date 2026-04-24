@@ -1,0 +1,87 @@
+@{
+    ViewData["Title"] = "NexoLibro | Details of User";
+}
+@model Exercise4.ViewModels.UserViewModel;
+
+<section class="max-w-7xl mx-auto px-8 py-section-gap">
+    <!-- Header Section -->
+    <div class="mb-section-gap">
+        <h1 class="font-h1 text-h1 text-primary mb-2">Reader Profile</h1>
+        <p class="text-on-surface-variant font-body-lg">Manage your digital sanctuary and reading identity.</p>
+    </div>
+    
+    <!-- DETAILS -->
+    <div class="md:col-span-8 space-y-8 mt-8 md:mt-0 mb-5">
+        <div class="bg-surface-container-lowest p-margin rounded-xl shadow-[0_4px_20px_-4px_rgba(59,47,47,0.08)] border border-surface-variant/30">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-10 gap-x-gutter">
+                <div class="space-y-1">
+                    <span class="font-label-caps text-label-caps text-outline uppercase">Full Name</span>
+                    <p class="font-body-lg text-primary">@Model.User.Name @Model.User.LastName</p>
+                </div>
+                <div class="space-y-1">
+                    <span class="font-label-caps text-label-caps text-outline uppercase">Email Address</span>
+                    <p class="font-body-lg text-primary">@Model.User.Email</p>
+                </div>
+                <div class="space-y-1">
+                    <span class="font-label-caps text-label-caps text-outline uppercase">ID</span>
+                    <p class="font-body-lg text-primary">@Model.User.Id</p>
+                </div>
+                <div class="space-y-1">
+                    <span class="font-label-caps text-label-caps text-outline uppercase">Phone</span>
+                    <p class="font-body-lg text-primary">@Model.User.Phone</p>
+                </div>
+                <div class="space-y-1">
+                    <span class="font-label-caps text-label-caps text-outline uppercase">Address</span>
+                    <p class="font-body-lg text-primary">@Model.User.Address</p>
+                </div>
+                <div class="space-y-1">
+                    <span class="font-label-caps text-label-caps text-outline uppercase">Emergency Phone</span>
+                    <p class="font-body-lg text-primary">@Model.User.EmergencyPhone</p>
+                </div>
+                <div class="space-y-1">
+                    <span class="font-label-caps text-label-caps text-outline uppercase">Status</span>
+                    <div class="inline-flex items-center px-3 py-1 mt-2 rounded-full bg-[#6BAA75]/10 text-[#6BAA75] font-semibold text-sm">
+                        <span class="w-2 h-2 rounded-full bg-[#6BAA75] mr-2"></span>
+                        Active Reader
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- LOANS -->
+    <div class="bg-white rounded-xl shadow-sm border border-outline-variant overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                <tr class="bg-surface-container-low border-b border-outline-variant">
+                    <th class="px-6 py-4 font-label-caps text-label-caps text-secondary">Book Title</th>
+                    <th class="px-6 py-4 font-label-caps text-label-caps text-secondary">Loan Date</th>
+                    <th class="px-6 py-4 font-label-caps text-label-caps text-secondary">Return Date</th>
+                    <th class="px-6 py-4 font-label-caps text-label-caps text-secondary">Status</th>
+                </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant">
+
+                <!-- Loan Rows -->
+                @foreach (var loan in Model.User.Loans)
+                {
+                    <tr class="hover:bg-surface-container-low/50 transition-colors group">
+                        <td class="px-6 py-5">
+                            <div class="flex items-center gap-4">
+                                <div>
+                                    <div class="font-semibold text-primary">@loan.Book.Title</div>
+                                    <div class="text-sm text-outline">@loan.Book.ISBN</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-5 text-secondary">@loan.LoanDate</td>
+                        <td class="px-6 py-5 text-secondary">@loan.ReturnDate</td>
+                        <td class="px-6 py-5 text-secondary">@loan.State</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,142 @@
+@{
+    ViewData["Title"] = " NexoLibro | Loans Management";
+}
+@using Exercise4.Enums
+@model Exercise4.ViewModels.LoanViewModel
+
+<section class="max-w-7xl mx-auto px-8 py-section-gap">
+    <!-- Header Section -->
+    <header class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div>
+            <h1 class="font-h1 text-h1 text-primary tracking-tight">Management of Loans</h1>
+            <p class="font-body-lg text-body-lg text-secondary mt-2">Track active borrowing, returns, and library circulation.</p>
+        </div>
+    </header>
+    
+    <!-- Showing Errors -->
+    <div asp-validation-summary="All" class="text-red-700 px-4 py-3 rounded"></div>
+    @if (TempData["ErrorMsg"] != null)
+    {
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+            @TempData["ErrorMsg"]
+        </div>
+    }
+    
+    <!-- New Loan Registration Section -->
+    <div class="bg-white rounded-xl shadow-sm border border-outline-variant p-8 mb-12">
+        <div class="mb-6">
+            <h2 class="text-xl font-bold text-primary mb-1">New Loan Request</h2>
+            <p class="text-sm text-secondary">Request a new loan inside our systems.</p>
+        </div>
+        <form asp-action="Create" asp-controller="Loans" method="post" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
+            <div class="space-y-2"> <!-- LOAN DATE -->
+                <span class="text-danger d-block" asp-validation-for="NewLoan.LoanDate"></span>
+                <label class="block text-xs font-bold text-secondary uppercase tracking-wider" asp-for="NewLoan.LoanDate">Loan Date</label>
+                <input class="w-full px-4 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-[#6BAA75] focus:ring-1 focus:ring-[#6BAA75] transition-all outline-none" asp-for="NewLoan.LoanDate" placeholder="@DateOnly.FromDateTime(DateTime.Now)" type="date"/>
+            </div>
+            <div class="space-y-2"> <!-- USER EMAIL -->
+                <span class="text-danger d-block" asp-validation-for="NewLoan.User.Email"></span>
+                <label class="block text-xs font-bold text-secondary uppercase tracking-wider" asp-for="NewLoan.User.Email">User Email</label>
+                <input class="w-full px-4 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-[#6BAA75] focus:ring-1 focus:ring-[#6BAA75] transition-all outline-none" asp-for="NewLoan.User.Email" placeholder="m.silva@example.com" type="email"/>
+            </div>
+            <div class="space-y-2"> <!-- BOOK TITLE -->
+                <span class="text-danger d-block" asp-validation-for="NewLoan.Book.Title"></span>
+                <label class="block text-xs font-bold text-secondary uppercase tracking-wider" asp-for="NewLoan.Book.Title">Book Title</label>
+                <input class="w-full px-4 py-2.5 bg-surface rounded-lg border border-outline-variant focus:border-[#6BAA75] focus:ring-1 focus:ring-[#6BAA75] transition-all outline-none" asp-for="NewLoan.Book.Title" placeholder="e. g: Don Quijote de la Mancha" type="text"/>
+            </div>
+
+            <div class="lg:col-span-4 flex justify-end mt-2">
+                <button type="submit" class="bg-[#6BAA75] text-white px-8 py-3 rounded-lg font-semibold flex items-center gap-2 hover:opacity-90 active:scale-[0.99] transition-all shadow-md">
+                    <span class="material-symbols-outlined">search</span>
+                    Request Loan
+                </button>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Main Table Container -->
+    <div class="bg-white rounded-xl shadow-sm border border-outline-variant overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                <tr class="bg-surface-container-low border-b border-outline-variant">
+                    <th class="px-6 py-4 font-label-caps text-label-caps text-secondary">User</th>
+                    <th class="px-6 py-4 font-label-caps text-label-caps text-secondary">Book Title</th>
+                    <th class="px-6 py-4 font-label-caps text-label-caps text-secondary">Loan Date</th>
+                    <th class="px-6 py-4 font-label-caps text-label-caps text-secondary">Return Date</th>
+                    <th class="px-6 py-4 font-label-caps text-label-caps text-secondary">Status</th>
+                    <th class="px-6 py-4 font-label-caps text-label-caps text-secondary">Details</th>
+                    <th class="px-6 py-4 font-label-caps text-label-caps text-secondary text-right">Actions</th>
+                </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant">
+
+                <!-- Loan Rows -->
+                @foreach (var loan in Model.Loans)
+                {
+                    <tr class="hover:bg-surface-container-low/50 transition-colors group">
+                        <td class="px-6 py-5">
+                            <div class="flex items-center gap-4">
+                                <div class="h-10 w-10 rounded-full bg-secondary-fixed flex items-center justify-center text-secondary font-bold">@loan.User.Name.Substring(0,1)@loan.User.LastName.Substring(0,1)</div>
+                                <div>
+                                    <div class="font-semibold text-primary">@loan.User.Name @loan.User.LastName</div>
+                                    <div class="text-sm text-outline">@loan.User.Email</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-5">
+                            <div class="flex items-center gap-4">
+                                <div>
+                                    <div class="font-semibold text-primary">@loan.Book.Title</div>
+                                    <div class="text-sm text-outline">@loan.Book.Author</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-5 text-secondary">@loan.LoanDate</td>
+                        <td class="px-6 py-5 text-secondary">@loan.ReturnDate</td>
+                        <td class="px-6 py-5 text-secondary">@loan.State</td>
+                        <td class="px-6 py-5 text-secondary">
+                            <a asp-controller="Loans" asp-action="Details" asp-route-id="@loan.Id" class="p-2 text-outline hover:text-[#3B2F2F] hover:bg-surface-container-high rounded-md transition-all">
+                                View
+                            </a>
+                        </td>
+                        <td class="px-6 py-5 text-right">
+                            <div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <a asp-controller="loans" asp-action="Edit" asp-route-id="@loan.Id" class="p-2 text-outline hover:text-[#3B2F2F] hover:bg-surface-container-high rounded-md transition-all">
+                                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                                </a>
+                                <form asp-action="Delete" asp-controller="Loans" asp-route-id="@loan.Id" method="post">
+                                    <button type="submit" class="p-2 text-outline hover:text-error hover:bg-error-container/30 rounded-md transition-all">
+                                        <span class="material-symbols-outlined text-[20px]">delete</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Secondary Info Section -->
+    <aside class="mt-section-gap grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-surface-container-high/50 p-8 rounded-2xl border border-surface-variant flex gap-6">
+            <div class="w-12 h-12 rounded-full bg-[#6BAA75]/20 flex items-center justify-center text-[#6BAA75] flex-shrink-0">
+                <span class="material-symbols-outlined" data-icon="auto_stories" data-weight="fill">auto_stories</span>
+            </div>
+            <div>
+                <h4 class="font-h3 text-h3 text-primary mb-2">Loan Policies</h4>
+                <p class="text-secondary body-md">Standard loans are issued for 30 days. Renewals are permitted if there are no pending holds on the title. Overdue accounts are restricted after 7 days past due.</p>
+            </div>
+        </div>
+        <div class="bg-surface-container-high/50 p-8 rounded-2xl border border-surface-variant flex gap-6">
+            <div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container flex-shrink-0">
+                <span class="material-symbols-outlined" data-icon="history">history</span>
+            </div>
+            <div>
+                <h4 class="font-h3 text-h3 text-primary mb-2">Inventory Sync</h4>
+                <p class="text-secondary body-md">The library catalog is updated in real-time as books are scanned in. Please ensure physical barcode verification for all returns to maintain accuracy.</p>
+            </div>
+        </div>
+    </aside>
+</section>
